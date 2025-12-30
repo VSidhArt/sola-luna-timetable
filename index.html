@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sola Luna Festival - My Schedule</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+
+    <header class="header">
+        <div class="logo">SOLA LUNA</div>
+        <nav class="nav">
+            <button class="nav-btn active" data-page="artists">Artists</button>
+            <button class="nav-btn" data-page="schedule">My Schedule</button>
+        </nav>
+    </header>
+
+    <main class="main">
+        <!-- Artists Page -->
+        <section id="artists-page" class="page active">
+            <h1 class="page-title">Artists</h1>
+            <div class="decorative-line">
+                <span></span>
+            </div>
+            <div class="search-container">
+                <input type="text" id="artist-search" placeholder="Search artists..." class="search-input">
+            </div>
+            <div class="artists-stats">
+                <span id="following-count">0</span> following
+            </div>
+            <div id="artists-list" class="artists-list"></div>
+        </section>
+
+        <!-- Schedule Page -->
+        <section id="schedule-page" class="page">
+            <h1 class="page-title">My Schedule</h1>
+            <div class="decorative-line">
+                <span></span>
+            </div>
+
+            <div id="empty-schedule" class="empty-state">
+                <div class="empty-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                </div>
+                <h2>No favorites yet</h2>
+                <p>Follow artists on the Artists page to build your personal schedule!</p>
+                <button class="btn-primary" onclick="showPage('artists')">Browse Artists</button>
+            </div>
+
+            <div id="schedule-content" class="schedule-content" style="display: none;">
+                <div class="day-tabs" id="day-tabs"></div>
+                <div id="timeline" class="timeline"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
