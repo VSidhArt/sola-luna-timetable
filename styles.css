@@ -307,6 +307,43 @@ body {
 }
 
 /* Schedule page */
+.schedule-options {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.25rem;
+    border-radius: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.checkbox-container:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-pink);
+}
+
+.checkbox-label {
+    color: white;
+    font-weight: 500;
+    font-size: 0.95rem;
+    user-select: none;
+}
+
 .empty-state {
     text-align: center;
     padding: 4rem 2rem;

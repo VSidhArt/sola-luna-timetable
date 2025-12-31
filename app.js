@@ -24,8 +24,9 @@ function parseCSV(csv) {
 // State
 let timetableData = [];
 let favorites = new Set();
-let currentPage = 'artists';
+let currentPage = 'schedule';
 let selectedDay = 'all'; // 'all' shows all days
+let showFullTimetable = false;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
@@ -33,8 +34,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadTimetable();
     setupNavigation();
     setupSearch();
+    setupFullTimetableToggle();
     renderArtists();
     updateFollowingCount();
+    renderSchedule();
 });
 
 // Load timetable from CSV file
@@ -100,6 +103,15 @@ function setupSearch() {
     const searchInput = document.getElementById('artist-search');
     searchInput.addEventListener('input', (e) => {
         renderArtists(e.target.value.toLowerCase());
+    });
+}
+
+// Full timetable toggle
+function setupFullTimetableToggle() {
+    const toggle = document.getElementById('full-timetable-toggle');
+    toggle.addEventListener('change', (e) => {
+        showFullTimetable = e.target.checked;
+        renderSchedule();
     });
 }
 
@@ -236,6 +248,19 @@ function getFavoritePerformances() {
         .sort((a, b) => a.timestamp - b.timestamp);
 }
 
+// Get all performances sorted by time
+function getAllPerformances() {
+    return timetableData
+        .map(entry => {
+            const [day, month] = entry.Date.split('/');
+            const [hours, minutes] = entry.Time.split(':');
+            const year = parseInt(month) === 12 ? 2025 : 2026;
+            const timestamp = new Date(year, parseInt(month) - 1, parseInt(day), parseInt(hours), parseInt(minutes)).getTime();
+            return { ...entry, timestamp };
+        })
+        .sort((a, b) => a.timestamp - b.timestamp);
+}
+
 // Get unique days from favorites
 function getUniqueDays(performances) {
     const days = [...new Set(performances.map(p => p.Date))];
@@ -252,11 +277,12 @@ function getUniqueDays(performances) {
 
 // Render schedule
 function renderSchedule() {
-    const performances = getFavoritePerformances();
+    const performances = showFullTimetable ? getAllPerformances() : getFavoritePerformances();
     const emptyState = document.getElementById('empty-schedule');
     const scheduleContent = document.getElementById('schedule-content');
 
-    if (performances.length === 0) {
+    // Only show empty state if no favorites AND not showing full timetable
+    if (performances.length === 0 && !showFullTimetable) {
         emptyState.style.display = 'block';
         scheduleContent.style.display = 'none';
         return;

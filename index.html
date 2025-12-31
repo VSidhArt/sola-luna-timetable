@@ -15,14 +15,14 @@
     <header class="header">
         <div class="logo">SOLA LUNA</div>
         <nav class="nav">
-            <button class="nav-btn active" data-page="artists">Artists</button>
-            <button class="nav-btn" data-page="schedule">My Schedule</button>
+            <button class="nav-btn" data-page="artists">Artists</button>
+            <button class="nav-btn active" data-page="schedule">My Schedule</button>
         </nav>
     </header>
 
     <main class="main">
         <!-- Artists Page -->
-        <section id="artists-page" class="page active">
+        <section id="artists-page" class="page">
             <h1 class="page-title">Artists</h1>
             <div class="decorative-line">
                 <span></span>
@@ -37,10 +37,17 @@
         </section>
 
         <!-- Schedule Page -->
-        <section id="schedule-page" class="page">
+        <section id="schedule-page" class="page active">
             <h1 class="page-title">My Schedule</h1>
             <div class="decorative-line">
                 <span></span>
+            </div>
+
+            <div class="schedule-options">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="full-timetable-toggle">
+                    <span class="checkbox-label">Full Timetable</span>
+                </label>
             </div>
 
             <div id="empty-schedule" class="empty-state">
