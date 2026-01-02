@@ -384,7 +384,7 @@ function renderTimeline(performances) {
         }
 
         html += `
-            <div class="timeline-item">
+            <div class="timeline-item" data-timestamp="${perf.timestamp}">
                 <div class="timeline-card">
                     <div class="timeline-time">${perf.Time}</div>
                     <div class="timeline-artist">${perf.Artist}</div>
@@ -395,6 +395,46 @@ function renderTimeline(performances) {
     });
 
     container.innerHTML = html;
+
+    // Auto-scroll to current time
+    scrollToCurrentTime();
+}
+
+// Scroll to the current or next performance
+function scrollToCurrentTime() {
+    const now = Date.now();
+    const timelineItems = document.querySelectorAll('.timeline-item[data-timestamp]');
+
+    if (timelineItems.length === 0) return;
+
+    let targetItem = null;
+
+    // Find the first performance that hasn't ended yet (current or upcoming)
+    // Assume each performance is about 1 hour long
+    const performanceDuration = 60 * 60 * 1000; // 1 hour in milliseconds
+
+    for (let item of timelineItems) {
+        const timestamp = parseInt(item.dataset.timestamp);
+        const endTime = timestamp + performanceDuration;
+
+        // If performance hasn't ended yet, this is our target
+        if (endTime >= now) {
+            targetItem = item;
+            break;
+        }
+    }
+
+    // If no upcoming/current performance found, scroll to the last item
+    if (!targetItem && timelineItems.length > 0) {
+        targetItem = timelineItems[timelineItems.length - 1];
+    }
+
+    // Scroll the target item into view with smooth animation
+    if (targetItem) {
+        setTimeout(() => {
+            targetItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    }
 }
 
 // Utility
